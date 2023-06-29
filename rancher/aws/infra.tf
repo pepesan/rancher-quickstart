@@ -153,7 +153,7 @@ module "rancher_common" {
   node_username              = local.node_username
   ssh_private_key_pem        = tls_private_key.global_key.private_key_pem
   rancher_kubernetes_version = var.rancher_kubernetes_version
-  letsencrypt_email = var.letsencrypt_email
+  letsencrypt_email           = var.letsencrypt_email
   cert_manager_version    = var.cert_manager_version
   rancher_version         = var.rancher_version
   rancher_helm_repository = var.rancher_helm_repository
