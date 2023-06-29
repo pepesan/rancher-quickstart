@@ -130,6 +130,20 @@ resource "aws_instance" "rancher_server" {
   }
 }
 
+data "aws_route53_zone" "existing_zone" {
+  name = var.domain_dns_name # consulta el dominio en route53
+}
+
+resource "aws_route53_record" "rancher_server_record" {
+  zone_id = data.aws_route53_zone.existing_zone.zone_id
+  name    = var.rancher_dns_name  # Reemplaza con el nombre de tu subdominio deseado
+  type    = "A"
+  ttl     = 60  # Tiempo de vida en segundos (opcional, ajusta según tus necesidades)
+  records = [
+    aws_instance.rancher_server.public_ip  # Reemplaza con la dirección IP deseada
+  ]
+}
+
 # Rancher resources
 module "rancher_common" {
   source = "../rancher-common"
@@ -139,12 +153,13 @@ module "rancher_common" {
   node_username              = local.node_username
   ssh_private_key_pem        = tls_private_key.global_key.private_key_pem
   rancher_kubernetes_version = var.rancher_kubernetes_version
-
+  letsencrypt_email = var.letsencrypt_email
   cert_manager_version    = var.cert_manager_version
   rancher_version         = var.rancher_version
   rancher_helm_repository = var.rancher_helm_repository
-
-  rancher_server_dns = join(".", ["rancher", aws_instance.rancher_server.public_ip, "sslip.io"])
+  # intento de usar una variable de entrada para definir el nombre dns de la instancia
+  rancher_server_dns = coalesce(var.rancher_dns_name, join(".", ["rancher", aws_instance.rancher_server.public_ip, "sslip.io"]))
+  #rancher_server_dns = join(".", ["rancher", aws_instance.rancher_server.public_ip, "sslip.io"])
 
   admin_password = var.rancher_server_admin_password
 
@@ -195,4 +210,14 @@ resource "aws_instance" "quickstart_node" {
     Name    = "${var.prefix}-quickstart-node"
     Creator = "rancher-quickstart"
   }
+}
+
+resource "aws_route53_record" "node_server_record" {
+  zone_id = data.aws_route53_zone.existing_zone.zone_id
+  name    = var.node_dns_name  # Reemplaza con el nombre de tu subdominio deseado
+  type    = "A"
+  ttl     = 60  # Tiempo de vida en segundos (opcional, ajusta según tus necesidades)
+  records = [
+    aws_instance.quickstart_node.public_ip  # Reemplaza con la dirección IP deseada
+  ]
 }

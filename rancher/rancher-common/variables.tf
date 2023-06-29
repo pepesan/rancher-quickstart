@@ -71,3 +71,9 @@ variable "rancher_helm_repository" {
   description = "The helm repository, where the Rancher helm chart is installed from"
   default     = "https://releases.rancher.com/server-charts/latest"
 }
+
+variable "letsencrypt_email" {
+  type        = string
+  description = "Let's Encrypt email to ask for the cert"
+  default     = "my@email.com"
+}

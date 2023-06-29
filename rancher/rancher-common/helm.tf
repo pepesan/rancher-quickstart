@@ -30,7 +30,15 @@ resource "helm_release" "rancher_server" {
     name  = "hostname"
     value = var.rancher_server_dns
   }
+  set {
+    name  = "ingress.tls.source"
+    value = "letsEncrypt"
+  }
 
+  set {
+    name  = "letsEncrypt.email"
+    value = var.letsencrypt_email
+  }
   set {
     name  = "replicas"
     value = "1"

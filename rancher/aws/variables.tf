@@ -93,6 +93,30 @@ variable "add_windows_node" {
   default     = false
 }
 
+variable "rancher_dns_name" {
+  description = "nombre del dns del servidor rancher"
+  type        = string
+  default     = ""
+}
+
+variable "node_dns_name" {
+  description = "nombre del dns del servidor del nodo k8s"
+  type        = string
+  default     = ""
+}
+
+variable "domain_dns_name" {
+  description = "dominio base del dns del servidor rancher"
+  type        = string
+  default     = ""
+}
+
+variable "letsencrypt_email" {
+  type        = string
+  description = "Let's Encrypt email to ask for the cert"
+  default     = "my@email.com"
+}
+
 # Local variables used to reduce repetition
 locals {
   node_username = "ec2-user"
