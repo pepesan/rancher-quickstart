@@ -28,4 +28,4 @@ vagrant/local_config.yaml
 # Intellij Idea and Other Jetbrains tools
 .idea/*
 
-**/.terraform.lock.hcl
+rancher/aws/.terraform.lock.hcl
