@@ -43,3 +43,12 @@ windows_instance_type = "t3a.large"
 
 # Kubernetes version to use for managed workload cluster
 workload_kubernetes_version = "v1.24.14+rke2r1"
+
+# Rancher Server FQDN
+rancher_dns_name="rancher.example.com"
+# Cluster Workload Node FQDN
+node_dns_name="node.example.com"
+# Main Domain
+domain_dns_name = "example.com"
+# Name for LetEcrypt Requests
+letsenrypt_email="main@example.com"

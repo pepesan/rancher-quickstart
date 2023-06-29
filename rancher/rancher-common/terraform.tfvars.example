@@ -34,3 +34,6 @@ rancher_version = "2.7.4"
 
 # Kubernetes version to use for managed workload cluster
 workload_kubernetes_version = "v1.24.14+rke2r1"
+
+# Email for letsencrypt requests
+letsencrypt_email = "name@example.com"
