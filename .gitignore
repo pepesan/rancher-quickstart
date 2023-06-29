@@ -24,3 +24,8 @@ vagrant/local_config.yaml
 
 # Terraform plan files
 *.tfplan
+
+# Intellij Idea and Other Jetbrains tools
+.idea/*
+
+**/.terraform.lock.hcl
