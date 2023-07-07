@@ -38,16 +38,37 @@ resource "aws_internet_gateway" "rancher_gateway" {
   }
 }
 
-resource "aws_subnet" "rancher_subnet" {
+resource "aws_subnet" "rancher_subnet_a" {
   vpc_id = aws_vpc.rancher_vpc.id
 
   cidr_block        = "10.0.0.0/24"
-  availability_zone = var.aws_zone
+  availability_zone = var.aws_zone_a
 
   tags = {
-    Name = "${var.prefix}-rancher-subnet"
+    Name = "${var.prefix}-rancher-subnet-a"
   }
 }
+resource "aws_subnet" "rancher_subnet_b" {
+  vpc_id = aws_vpc.rancher_vpc.id
+
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = var.aws_zone_b
+
+  tags = {
+    Name = "${var.prefix}-rancher-subnet-b"
+  }
+}
+resource "aws_subnet" "rancher_subnet_c" {
+  vpc_id = aws_vpc.rancher_vpc.id
+
+  cidr_block        = "10.0.2.0/24"
+  availability_zone = var.aws_zone_c
+
+  tags = {
+    Name = "${var.prefix}-rancher-subnet-c"
+  }
+}
+
 
 resource "aws_route_table" "rancher_route_table" {
   vpc_id = aws_vpc.rancher_vpc.id
@@ -62,8 +83,16 @@ resource "aws_route_table" "rancher_route_table" {
   }
 }
 
-resource "aws_route_table_association" "rancher_route_table_association" {
-  subnet_id      = aws_subnet.rancher_subnet.id
+resource "aws_route_table_association" "rancher_route_table_association_a" {
+  subnet_id      = aws_subnet.rancher_subnet_a.id
+  route_table_id = aws_route_table.rancher_route_table.id
+}
+resource "aws_route_table_association" "rancher_route_table_association_b" {
+  subnet_id      = aws_subnet.rancher_subnet_b.id
+  route_table_id = aws_route_table.rancher_route_table.id
+}
+resource "aws_route_table_association" "rancher_route_table_association_c" {
+  subnet_id      = aws_subnet.rancher_subnet_c.id
   route_table_id = aws_route_table.rancher_route_table.id
 }
 
@@ -95,18 +124,18 @@ resource "aws_security_group" "rancher_sg_allowall" {
 # AWS EC2 instance for creating a single node RKE cluster and installing the Rancher server
 resource "aws_instance" "rancher_server" {
   depends_on = [
-    aws_route_table_association.rancher_route_table_association
+    aws_route_table_association.rancher_route_table_association_a
   ]
   ami           = data.aws_ami.sles.id
   instance_type = var.instance_type
 
   key_name                    = aws_key_pair.quickstart_key_pair.key_name
   vpc_security_group_ids      = [aws_security_group.rancher_sg_allowall.id]
-  subnet_id                   = aws_subnet.rancher_subnet.id
+  subnet_id                   = aws_subnet.rancher_subnet_a.id
   associate_public_ip_address = true
 
   root_block_device {
-    volume_size = 40
+    volume_size = 80
   }
 
   provisioner "remote-exec" {
@@ -170,18 +199,18 @@ module "rancher_common" {
 # AWS EC2 instance for creating a single node workload cluster
 resource "aws_instance" "quickstart_node" {
   depends_on = [
-    aws_route_table_association.rancher_route_table_association
+    aws_route_table_association.rancher_route_table_association_a
   ]
   ami           = data.aws_ami.sles.id
   instance_type = var.instance_type
 
   key_name                    = aws_key_pair.quickstart_key_pair.key_name
   vpc_security_group_ids      = [aws_security_group.rancher_sg_allowall.id]
-  subnet_id                   = aws_subnet.rancher_subnet.id
+  subnet_id                   = aws_subnet.rancher_subnet_a.id
   associate_public_ip_address = true
 
   root_block_device {
-    volume_size = 40
+    volume_size = 80
   }
 
   user_data = templatefile(

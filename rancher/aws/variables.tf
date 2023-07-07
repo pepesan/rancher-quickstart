@@ -26,10 +26,20 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "aws_zone" {
+variable "aws_zone_a" {
+  type        = string
+  description = "AWS zone used for all resources"
+  default     = "us-east-1a"
+}
+variable "aws_zone_b" {
   type        = string
   description = "AWS zone used for all resources"
   default     = "us-east-1b"
+}
+variable "aws_zone_c" {
+  type        = string
+  description = "AWS zone used for all resources"
+  default     = "us-east-1c"
 }
 
 variable "prefix" {

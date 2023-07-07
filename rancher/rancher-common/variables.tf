@@ -33,13 +33,13 @@ variable "rancher_kubernetes_version" {
 variable "cert_manager_version" {
   type        = string
   description = "Version of cert-manager to install alongside Rancher (format: 0.0.0)"
-  default     = "1.11.0"
+  default     = "1.12.2"
 }
 
 variable "rancher_version" {
   type        = string
   description = "Rancher server version (format v0.0.0)"
-  default     = "2.7.4"
+  default     = "2.7.5"
 }
 
 # Required
