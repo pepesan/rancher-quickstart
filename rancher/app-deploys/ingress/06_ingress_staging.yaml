@@ -1,0 +1,31 @@
+# LB de ingress aebc013598d694d9896a0076aa17d868-902499020.eu-west-3.elb.amazonaws.com
+# certificado generado para *.cluster.buildconfes.click
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kuard
+  annotations:
+    cert-manager.io/issuer: "letsencrypt-staging"
+
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - nginx.cluster.buildconfes.click
+      secretName: quickstart-example-tls
+  rules:
+    - host: nginx.cluster.buildconfes.click
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kuard
+                port:
+                  number: 80
+# comprueba que está ok
+# kubectl get certificate
+# kubectl describe certificate quickstart-example-tls
+# kubectl describe secret quickstart-example-tls
+# borrar certificado kubectl delete secret quickstart-example-tls

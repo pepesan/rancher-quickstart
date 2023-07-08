@@ -1,0 +1,18 @@
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: quickstart
+spec:
+  version: 8.8.2
+  count: 1
+  elasticsearchRef:
+    name: quickstart
+
+## Comprobaciones kubectl get kibana
+## Pods: kubectl get pod --selector='kibana.k8s.elastic.co/name=quickstart'
+## Logs: kubectl logs -f quickstart-kb-XXXX-XXX
+## Password: kubectl get secret quickstart-es-elastic-user -o=jsonpath='{.data.elastic}' | base64 --decode; echo
+## Port Forward (minikube): kubectl port-forward service/quickstart-kb-http 5601
+## Petición (minikube): curl -u "elastic:$PASSWORD" -k "https://localhost:9200"
+## Service LB: kubectl patch service quickstart-kb-http -p '{"spec": {"type": "LoadBalancer"}}'
+## Petición (LB): curl -u "elastic:$PASSWORD" -k "https://LB:9200"

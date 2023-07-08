@@ -1,0 +1,5 @@
+apiVersion: v2
+name: mychart
+version: 1.0.7
+
+
