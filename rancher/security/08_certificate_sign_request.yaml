@@ -1,0 +1,14 @@
+apiVersion: certificates.k8s.io/v1
+kind: CertificateSigningRequest
+metadata:
+  name: user-request-developer
+spec:
+  groups:
+    - system:authenticated
+  request: contenido_de_csr
+  signerName: kubernetes.io/kube-apiserver-client
+  expirationSeconds: 315569260 # 10 años
+  usages:
+    - digital signature
+    - key encipherment
+    - client auth

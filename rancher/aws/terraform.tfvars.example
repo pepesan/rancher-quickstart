@@ -18,7 +18,9 @@ aws_region = "us-east-1"
 aws_session_token = ""
 
 # AWS zone used for all resources
-aws_zone = "us-east-1b"
+aws_zone_a = "us-east-1a"
+aws_zone_b = "us-east-1b"
+aws_zone_c = "us-east-1c"
 
 # Version of cert-manager to install alongside Rancher (format: 0.0.0)
 cert_manager_version = "1.11.0"
