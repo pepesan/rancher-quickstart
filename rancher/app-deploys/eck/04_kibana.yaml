@@ -8,6 +8,10 @@ spec:
   elasticsearchRef:
     name: quickstart
 
+#  http:
+#    service:
+#      spec:
+#        type: LoadBalancer
 ## Comprobaciones kubectl get kibana
 ## Pods: kubectl get pod --selector='kibana.k8s.elastic.co/name=quickstart'
 ## Logs: kubectl logs -f quickstart-kb-XXXX-XXX

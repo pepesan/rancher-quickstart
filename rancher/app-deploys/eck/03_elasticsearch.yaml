@@ -9,7 +9,10 @@ spec:
     count: 1
     config:
       node.store.allow_mmap: false
-
+#  http:
+#    service:
+#      spec:
+#        type: LoadBalancer
 ## Comprobaciones kubectl get elasticsearch
 ## Pods: kubectl get pods --selector='elasticsearch.k8s.elastic.co/cluster-name=quickstart'
 ## Logs: kubectl logs -f quickstart-es-default-0
