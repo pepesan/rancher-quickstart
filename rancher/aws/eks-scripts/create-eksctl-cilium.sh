@@ -22,6 +22,9 @@ eksctl create cluster -f ./eksctl-cilium.yaml
 # cilium install
 # cilium status --wait
 
+# Comprobación de la instalación con tráfico
+# cilium connectivity test
+
 # Instalación de Hubble CLI (observabilidad de red)
 #export HUBBLE_VERSION=$(curl -s
 #https://raw.githubusercontent.com/cilium/hubble/master/stable.txt)
